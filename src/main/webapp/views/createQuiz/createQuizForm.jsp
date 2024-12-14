@@ -31,7 +31,7 @@
             margin-bottom: 5px;
         }
         .form-group input {
-            width: 100%;
+            width: -webkit-fill-available;
             padding: 8px;
             border: 1px solid #ddd;
             border-radius: 4px;

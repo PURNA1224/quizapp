@@ -60,13 +60,14 @@
 		}
 		
 		td input[type="submit"][value="update"] {
-		    background-color: #0000cec4;
+		    background-color: #3d3dc2;
 		    color: white;
 		}
 		
 		td input[type="submit"][value="delete"] {
-		    background-color: #ff4545;;
+		    background-color: #cd0046de;;
 		    color: #fdfdfd;
+		    width: 62.5px;:
 		}
         
     </style>
