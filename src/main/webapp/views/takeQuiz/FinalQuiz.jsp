@@ -86,6 +86,9 @@
             <label for="quizId">Quiz ID:</label>
             <input class="upside" type="text" id="quizId" name="quizId" value="${presentQuiz.id}" readonly>
 
+			<label for="quizId">Quiz Title:</label>
+            <input class="upside" type="text" id="quizTitle" name="quizTitle" value="${presentQuiz.title}" readonly>
+            
             <label for="numQuestions">Number of Questions:</label>
             <input class="upside" type="number" id="numQuestions" name="numQuestions" value="${numQ}" readonly>
 
