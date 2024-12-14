@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Participant Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            width: 90%;
+            max-width: 400px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Enter Quiz Details</h1>
+        <form action="/takeQuizById" method="GET">
+            <!-- Participant Name -->
+            <label for="participantName">Participant Name:</label>
+            <input id="participantName" name="participantName" type="text" placeholder="Enter your name" required>
+            
+            <!-- Roll Number -->
+            <label for="rollNumber">Roll Number:</label>
+            <input id="rollNumber" name="rollNumber" type="text" placeholder="Enter your roll number" required>
+            
+            <!-- College Name -->
+            <label for="collegeName">College Name:</label>
+            <input id="collegeName" name="collegeName" type="text" placeholder="Enter your college name" required>
+            
+            <!-- Quiz ID -->
+            <label for="quizId">Quiz ID:</label>
+            <input id="quizId" name="quizId" type="text" placeholder="Enter the Quiz ID" required>
+            
+            <!-- Submit Button -->
+            <button type="submit">Start Quiz</button>
+        </form>
+    </div>
+</body>
+</html>
