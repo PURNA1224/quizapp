@@ -40,6 +40,7 @@ public class HomeController {
 		return "views/ReadQuestions.html";
 	}
 	
+	
 	@RequestMapping(value="readQuestionByFilter")
 	public String readQuestionsByFilter(@RequestParam(required=false) String category, Model m) {
 		List<Question> questionsList = Questionservice.getAllQuestions();
