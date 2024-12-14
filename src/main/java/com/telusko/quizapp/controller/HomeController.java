@@ -56,7 +56,7 @@ public class HomeController {
 	@GetMapping(value="addQuestionToDB")
 	public String addQuestionToDB(@ModelAttribute Question q, Model m) {
 		Questionservice.addQuestion(q);
-		return "views/QuestionsCrud.html";
+		return "views/AddQuestionSuccessPage.jsp";
 	}
 	
 	@GetMapping("updateQuestion")
