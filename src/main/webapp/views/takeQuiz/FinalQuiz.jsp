@@ -32,7 +32,7 @@
             margin: 10px 0 5px;
         }
         .upside {
-            width: 95%;
+			width: -webkit-fill-available;
             padding: 10px;
             margin-bottom: 15px;
             border: 1px solid #ccc;
