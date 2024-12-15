@@ -69,32 +69,36 @@
 		    color: #fdfdfd;
 		    width: 62.5px;:
 		}
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn-new-quiz {
+            background-color: #007bff;
+            color: white;
+        }
+        .btn-new-quiz:hover {
+            background-color: #0056b3;
+        }
+        .btn-home {
+            background-color: #28a745;
+            color: white;
+        }
+        .btn-home:hover {
+            background-color: #1e7e34;
+        }
         
     </style>
 </head>
 <body>
-	<%-- <c:out value="${questions}"/>
-	<c:forEach var="i" begin="1" end="5">
-		Item <c:out value="${i}"/>
-	</c:forEach> --%>
-	<%-- <c:if test="${not empty questions}">
-    	<c:forEach var="question" items="${questions}">
-			<tr>
-            	<td>${question.id}</td>
-				<td>${question.questionTitle}</td>
-	            <td>
-					${question.option1}, 
-		            ${question.option2}, 
-					${question.option3}, 
-					${question.option4}
-				</td>
-				<td>${question.rightAnswer}</td>
-				<td>${question.difficultylevel}</td>
-				<td>${question.category}</td>
-				
-            </tr>                        
-        </c:forEach>
-     </c:if> --%>
      <div class="container">
         <h1>Filtered Questions by Category</h1>
         <table>
@@ -149,6 +153,13 @@
                 </c:if>
             </tbody>
         </table>
+        <div class="button-group">
+            <!-- Button to navigate to home -->
+            <form action="/" method="GET" style="margin: 0;">
+                <button type="submit" class="btn-home">Home</button>
+            </form>
+        </div>
+        
     </div>
 </body>
 </html>

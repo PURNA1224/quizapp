@@ -120,10 +120,10 @@
 		            	<input type="hidden" name="questionId" value="${question.id}">
 	            		
 		            		${question.questionTitle}<br>
-		            			<label><input type="radio" name="q${question.id}" value="${question.option1}" required>${question.option1}</label><br>
-		            			<label><input type="radio" name="q${question.id}" value="${question.option2}" required>${question.option2}</label><br>
-		            			<label><input type="radio" name="q${question.id}" value="${question.option3}" required>${question.option3}</label><br>
-		            			<label><input type="radio" name="q${question.id}" value="${question.option4}" required>${question.option4}</label><br>
+		            			<label> <input type="radio" name="q${question.id}" value="${question.option1}" required> ${question.option1} </label> <br>
+		            			<label> <input type="radio" name="q${question.id}" value="${question.option2}" required> ${question.option2} </label> <br>
+		            			<label> <input type="radio" name="q${question.id}" value="${question.option3}" required> ${question.option3} </label> <br>
+		            			<label> <input type="radio" name="q${question.id}" value="${question.option4}" required> ${question.option4} </label> <br>
 	            	</div>
             	</li>
             	</c:forEach>
