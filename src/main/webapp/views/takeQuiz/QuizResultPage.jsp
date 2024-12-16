@@ -52,15 +52,9 @@
         .summary table th {
             background-color: #f2f2f2;
         }
-        .btn-new-quiz {
-            background-color: #007bff;
-            color: white;
-        }
-        .btn-new-quiz:hover {
-            background-color: #0056b3;
-        }
         .btn-home {
             background-color: #28a745;
+            width: 100%;
             color: white;
         }
         .btn-home:hover {
@@ -71,11 +65,8 @@
 		    border: none;
 		    margin-top: 20px;
 		    border-radius: 5px;
-		    display: inline-block;
         }
-        form{
-        	display: inline-block;
-        }
+
     </style>
 </head>
 <body>
@@ -118,15 +109,10 @@
                     </c:forEach>
                 </tbody>
             </table>
-            <!-- Button to create a new quiz -->
-            <form action="views/createQuiz/createQuizForm.jsp" style="margin: 0;">
-                <button type="submit" class="btn-new-quiz">Create New Quiz</button>
-            </form>
-            <!-- Button to navigate to home -->
-            <form action="/" method="GET" style="margin: 0; float:right;" >
-                <button type="submit" class="btn-home">Home</button>
-            </form>
         </div>
+        <form action="/" method="GET" style="margin: 0;" >
+                <button type="submit" class="btn-home">Home</button>
+       	</form>
     </div>
 </body>
 </html>

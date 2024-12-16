@@ -23,8 +23,8 @@ import ch.qos.logback.core.model.Model;
 @RequestMapping("question")
 public class QuestionController {
 	
-//	@Autowired
-//	QuestionService questionService;
+	@Autowired
+	QuestionService questionService;
 //	
 //	@Autowired
 //	QuestionDao questionDao;
@@ -72,5 +72,15 @@ public class QuestionController {
 //	@PostMapping("updateQuestion/{id}")
 //	public ResponseEntity<String> updateQuestion(@RequestBody Question question, @PathVariable() Integer id) {
 //		return questionService.updateQuestion(id, question);
+//	}
+	
+//	@GetMapping("/checkForValidCategory")
+//	public Integer validCategoryOrNot(@RequestParam String category) {
+//		if(questionService.getQuestionsByCategory(category)!=null) {
+//			return 1;
+//		}
+//		else {
+//			return 0;
+//		}
 //	}
 }

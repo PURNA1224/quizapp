@@ -23,7 +23,8 @@ public class HomeController {
 	QuestionDao questionDao;
 	
 	@Autowired
-	QuestionService Questionservice;
+	QuestionService questionService;
+	
 	
 	@GetMapping("/")
 	public String home() {
@@ -43,7 +44,7 @@ public class HomeController {
 	
 	@RequestMapping(value="readQuestionByFilter")
 	public String readQuestionsByFilter(@RequestParam(required=false) String category, Model m) {
-		List<Question> questionsList = Questionservice.getAllQuestions();
+		List<Question> questionsList = questionService.getAllQuestions();
 		List<Question> questions= null;
 		if(category != null && !category.isEmpty()) {
 			questions = questionsList.stream()
@@ -56,27 +57,39 @@ public class HomeController {
 	
 	@GetMapping(value="addQuestionToDB")
 	public String addQuestionToDB(@ModelAttribute Question q, Model m) {
-		Questionservice.addQuestion(q);
+		questionService.addQuestion(q);
 		return "views/AddQuestionSuccessPage.jsp";
 	}
 	
 	@GetMapping("updateQuestion")
 	public String updateQuestion(@RequestParam int id, Model m) {
-		m.addAttribute("question", Questionservice.getQuestionsById(id).getBody());
+		m.addAttribute("question", questionService.getQuestionsById(id).getBody());
 		return "views/QuestionUpdatePage.jsp";
 	}
 	
 	@RequestMapping("updateQuestionToDB")
 	public String updateQuestionToDB(@ModelAttribute Question q, Model m) {
-		Questionservice.updateQuestion(q.getId(), q);
-		m.addAttribute("questions", Questionservice.getQuestionsByCategory(q.getCategory()).getBody());
+		questionService.updateQuestion(q.getId(), q);
+		m.addAttribute("questions", questionService.getQuestionsByCategory(q.getCategory()).getBody());
 		return "views/ReadQuestionJsp.jsp";
 	}
 	
 	@GetMapping("deleteQuestion")
 	public String deleteQuestion(@RequestParam("id") int questionId, @RequestParam String category, RedirectAttributes redirectAttributes) {
-		Questionservice.removeQuestion(questionId);
+		questionService.removeQuestion(questionId);
 		redirectAttributes.addAttribute("category", category);
 		return "redirect:/readQuestionByFilter";
 	}
+	
+//	@GetMapping("/checkForValidCategory")
+//	public String validCategoryOrNot(@RequestParam String category, Model model) {
+//		if(questionService.getQuestionsByCategory(category)!=null) {
+//			model.addAttribute("checkCat", 1);
+//		}
+//		else {
+//			model.addAttribute("checkCat", 0);
+//		}
+//		return "
+//	}
+	
 }
