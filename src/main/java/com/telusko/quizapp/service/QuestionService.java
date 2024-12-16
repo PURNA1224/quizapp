@@ -87,5 +87,11 @@ public class QuestionService {
 		return new ResponseEntity<>("Failed", HttpStatus.BAD_REQUEST);
 	}
 
+	public ResponseEntity<Long> noOfQuestionsAvailable(){
+		return new ResponseEntity<>(questionDao.count(), HttpStatus.BAD_REQUEST);
+	}
 
+	public ResponseEntity<Integer> noOfQuestionsAvailableByCateogory(String category){
+		return new ResponseEntity<>(questionDao.findByCategory(category).size() , HttpStatus.BAD_REQUEST);
+	}
 }
