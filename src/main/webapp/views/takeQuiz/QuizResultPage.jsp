@@ -77,6 +77,18 @@
         	display: inline-block;
         }
     </style>
+    <script type="text/javascript">
+    
+	    window.onload = function() {
+			history.pushState(null, "", location.href);
+			
+			window.onpopstate = function() {
+				history.pushState(null, "", location.href);
+	            window.location.href = "/";
+	        };
+			
+		};
+    </script>
 </head>
 <body>
     <div class="result-container">
@@ -120,7 +132,7 @@
             </table>
             <!-- Button to create a new quiz -->
             <form action="views/createQuiz/createQuizForm.jsp" style="margin: 0;">
-                <button type="submit" class="btn-new-quiz">Create New Quiz</button>
+                <button type="submit" class="btn-new-quiz">Attend New Quiz</button>
             </form>
             <!-- Button to navigate to home -->
             <form action="/" method="GET" style="margin: 0; float:right;" >
