@@ -65,13 +65,76 @@
         .question input[type="radio"] {
             margin-right: 10px; /* Space between radio button and text */
         }
+        #counter{
+        	color: white;
+		    border: solid;
+		    width: fit-content;
+		    padding: 10px;
+		    background-color: seagreen;
+		    font-size: unset;
+		    font-family: 'DM Sans';
+		    border-radius: inherit;
+        }
+        #redCounter{
+        	display: none;
+        	color: white;
+		    border: solid;
+		    width: fit-content;
+		    padding: 10px;
+		    background-color: red;
+		    font-size: unset;
+		    font-family: 'DM Sans';
+		    border-radius: inherit;
+        }
     </style>
+    <script type="text/javascript">
+    /* var timeVal = element.getAttribute('timeValue'); */
+    var remainingTime = parseInt(${timeValue})/1000;
+    console.log(remainingTime);
+/* 	function autoSubmitForm(){
+		document.getElementById("testPage").submit();
+	} */
+    
+    function countDown(remainingTime){
+    	const formPage = document.getElementById('testPage');
+    	const counterComponent = document.getElementById('counter');
+    	const redCounterComponent = document.getElementById('redCounter');
+    	
+    	const interval = setInterval(() => {
+    		if(remainingTime > 10){
+	    		remainingTime -= 1;
+	    		counterComponent.innerText = "Remaining Time: " + remainingTime+" seconds";
+    		}
+    		else{
+    			remainingTime -= 1;
+    			document.getElementById("redCounter").style.display = "block";
+	    		redCounterComponent.innerText = "Remaining Time: " + remainingTime+" seconds";
+	    		document.getElementById("counter").style.display = "none";
+    		}
+    		
+    		if(remainingTime <= 0){
+    			clearInterval(interval);
+    			counterComponent.innerText = "Submitting the form...";
+    			formPage.submit();
+    		}
+    	},1000);
+    }    
+
+	
+	window.onload = () => {
+		countDown(remainingTime);
+		/* setTimeout(autoSubmitForm, timeValue); */
+	};
+</script>
 </head>
 <body>
     <div class="container">
+    <input type="hidden" id='timeValue' name="timeValue" value="${timeValue}"/>
+    <h5 id="counter">Loading timer...</h5>
+    <h5 id="redCounter"></h5>
         <h1>Take Quiz</h1>
 		
-       	<form action="/calculatingResult" method="post">
+       	<form action="/calculatingResult" method="post" id="testPage">
        	<input type="hidden" name="quizId" class="upside" value="${presentQuiz.id}">
             <!-- Participant Details -->
             <label for="participantName">Participant Name:</label>
@@ -90,28 +153,7 @@
             <input class="upside" type="text" id="quizTitle" name="quizTitle" value="${presentQuiz.title}" readonly>
             
             <label for="numQuestions">Number of Questions:</label>
-            <input class="upside" type="number" id="numQuestions" name="numQuestions" value="${numQ}" readonly>
-
-<%--
-            <!-- Questions Section -->
-            <% int i = 1; %>
-           <c:forEach var="question" items="${presentQuiz.questions}">
-               
-                    Q<%=i %>) ${question.questionTitle}
-                    <% i++; %>
-                    <br>
-                    <label>
-                        <input type="radio" name="q${question.id}" value="${question.option1}" required> ${question.option1}</label><br>
-                    <label>
-                        <input type="radio" name="q${question.id}" value="${question.option2}" required> ${question.option2}</label><br>
-                    <label>
-                        <input type="radio" name="q${question.id}" value="${question.option3}" required> ${question.option3}</label><br>
-                    <label>
-                        <input type="radio" name="q${question.id}" value="${question.option4}" required> ${question.option4}</label><br>
-                </div>
-                <hr>
-            </c:forEach> --%>
-            
+            <input class="upside" type="number" id="numQuestions" name="numQuestions" value="${numQ}" readonly>            
             
             <ol type="1">
             	<c:forEach var="question" items="${presentQuiz.questions}">
@@ -120,10 +162,11 @@
 		            	<input type="hidden" name="questionId" value="${question.id}">
 	            		
 		            		${question.questionTitle}<br>
-		            			<label> <input type="radio" name="q${question.id}" value="${question.option1}" required> ${question.option1} </label> <br>
-		            			<label> <input type="radio" name="q${question.id}" value="${question.option2}" required> ${question.option2} </label> <br>
-		            			<label> <input type="radio" name="q${question.id}" value="${question.option3}" required> ${question.option3} </label> <br>
-		            			<label> <input type="radio" name="q${question.id}" value="${question.option4}" required> ${question.option4} </label> <br>
+		            			<label> <input type="radio" name="q${question.id}" value="${question.option1}" > ${question.option1} </label> <br>
+		            			<label> <input type="radio" name="q${question.id}" value="${question.option2}" > ${question.option2} </label> <br>
+		            			<label> <input type="radio" name="q${question.id}" value="${question.option3}" > ${question.option3} </label> <br>
+		            			<label> <input type="radio" name="q${question.id}" value="${question.option4}" > ${question.option4} </label> <br>
+		            			<label> <input type="hidden" name="q${question.id}" value="No answer" checked></label> <br>
 	            	</div>
             	</li>
             	</c:forEach>
