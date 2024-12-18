@@ -68,9 +68,34 @@
         }
 
     </style>
+    <script>
+   /*  window.onload = function () {
+        // Push a dummy state to the history stack
+        history.pushState(null, "", location.href);
+
+        // Listen for the back button event
+        window.onpopstate = function (event) {
+            if (event) {
+                // Redirect to the desired page when the back button is pressed
+                window.location.href = "/";
+            }
+        };
+    }; */
+    
+ // Prevent going back to the quiz
+/*     window.onload = function () {
+        history.pushState(null, "", location.href);
+        window.onpopstate = function () {
+            history.pushState(null, "", location.href);
+            window.location.href = "/";
+            alert("You cannot go back to the quiz page.");
+        };
+    }; */
+    </script>
 </head>
 <body>
     <div class="result-container">
+    
         <h2>Quiz Result</h2>
         <p>Participant Name: <strong>${participantName}</strong></p>
         <p>Roll Number: <strong>${rollNumber}</strong></p>

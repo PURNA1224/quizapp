@@ -66,32 +66,35 @@
             margin-right: 10px; /* Space between radio button and text */
         }
         #counter{
-        	color: white;
-		    border: solid;
+        	color: #2aa700;
+		    /* border: solid; */
 		    width: fit-content;
 		    padding: 10px;
-		    background-color: seagreen;
+		    /* background-color: seagreen; */
 		    font-size: unset;
 		    font-family: 'DM Sans';
 		    border-radius: inherit;
+		    font-weight: 600;
         }
         #redCounter{
         	display: none;
-        	color: white;
-		    border: solid;
+        	color: red;
+		    /* border: solid; */
 		    width: fit-content;
 		    padding: 10px;
-		    background-color: red;
+		    /* background-color: red; */
 		    font-size: unset;
 		    font-family: 'DM Sans';
 		    border-radius: inherit;
+		    font-weight: 600;
         }
     </style>
     <script type="text/javascript">
+    
 	    var remainingTime = parseInt(${timeValue})/1000;
 	    
 	    function countDown(remainingTime){
-	    	const formPage = document.getElementById('testPage');
+		    const formPage = document.getElementById('testPage');
 	    	const counterComponent = document.getElementById('counter');
 	    	const redCounterComponent = document.getElementById('redCounter');
 	    	
@@ -108,7 +111,7 @@
 	    		}
 	    		
 	    		if(remainingTime <= 0){
-	    			clearInterval(interval);
+	    			/* clearInterval(interval); */
 	    			counterComponent.innerText = "Submitting the form...";
 	    			formPage.submit();
 	    		}
@@ -116,25 +119,35 @@
 	    }    
 	    
 	    
-	
+	    window.onload = function () {
+	        /* // Push a dummy state to the history stack
+	        history.pushState(null, "/", location.href);
+
+	        // Listen for the back button event
+	        window.onpopstate = function (event) {
+	            if (event) {
+	                // Redirect to the desired page when the back button is pressed
+	                window.location.href = "/";
+	            }
+	        }; */
+	        
+	        countDown(remainingTime);
+	    };
+	    
+	    function zeroCounter() {
+	    	/* const formPage = document.getElementById('testPage'); */
+	    	/* setInterval(()=> {
+	    		formPage.submit();
+	    	},0); */
+	    	countDown(0);
+	    }
 		
-		window.onload = function() {
-			/* history.pushState(null, "", location.href);
-			
-			window.onpopstate = function() {
-				history.pushState(null, "", location.href);
-                window.location.href = "/";
-            }; */
-			
-			countDown(remainingTime);
-			
-		};
 </script>
 </head>
 <body>
     <div class="container">
     <input type="hidden" id='timeValue' name="timeValue" value="${timeValue}"/>
-    <h5 id="counter">Loading timer...</h5>
+    <h5 id="counter">Loading counter...</h5>
     <h5 id="redCounter"></h5>
         <h1>Take Quiz</h1>
 		
@@ -177,7 +190,7 @@
             </ol>
 
             <!-- Submit Button -->
-            <button type="submit">Submit Quiz</button>
+            <button type="submit" onclick="zeroCounter()">Submit Quiz</button>
         </form>
     </div>
 </body>
