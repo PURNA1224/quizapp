@@ -94,6 +94,7 @@
 	    var remainingTime = parseInt(${timeValue})/1000;
 	    
 	    function countDown(remainingTime){
+	    	let sec = 60;
 		    const formPage = document.getElementById('testPage');
 	    	const counterComponent = document.getElementById('counter');
 	    	const redCounterComponent = document.getElementById('redCounter');
@@ -101,7 +102,11 @@
 	    	const interval = setInterval(() => {
 	    		if(remainingTime > 10){
 		    		remainingTime -= 1;
-		    		counterComponent.innerText = "Remaining Time: " + remainingTime+" seconds";
+		    		sec -= 1;
+		    		counterComponent.innerText = "Remaining Time: " + parseInt(remainingTime/60)+" : "+ sec +" min";
+		    		if(sec == 0){
+		    			sec = 60;
+		    		}
 	    		}
 	    		else{
 	    			remainingTime -= 1;
@@ -147,7 +152,7 @@
 <body>
     <div class="container">
     <input type="hidden" id='timeValue' name="timeValue" value="${timeValue}"/>
-    <h5 id="counter">Loading counter...</h5>
+    <h5 id="counter">Remaining time: 10:00 min</h5>
     <h5 id="redCounter"></h5>
         <h1>Take Quiz</h1>
 		

@@ -43,7 +43,7 @@ public class TakeQuizController {
 		m.addAttribute("rollNumber", rollNumber);
 		m.addAttribute("numQ", numQ);
 		m.addAttribute("quizTitle", presentQuiz.getTitle());
-		m.addAttribute("timeValue", 60000);
+		m.addAttribute("timeValue", 180000);
 		return "views/takeQuiz/FinalQuiz.jsp";
 	}
 	
