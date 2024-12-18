@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.telusko.quizapp.dao.QuizDao;
 import com.telusko.quizapp.model.ComparingResponse;
@@ -35,15 +36,6 @@ public class TakeQuizController {
 	@GetMapping("/takeQuizById")
 	public String takeQuizById(@RequestParam String participantName, @RequestParam String rollNumber, @RequestParam String collegeName, @RequestParam Integer quizId, Model m) {
 		Quiz presentQuiz = quizDao.findById(quizId).get();
-//		List<List<String>> options = null;
-//		for(Question q: presentQuiz.getQuestions()) {
-//			List<String> presentOptions = new ArrayList<>();
-//			presentOptions.add(q.getOption1());
-//			presentOptions.add(q.getOption2());
-//			presentOptions.add(q.getOption3());
-//			presentOptions.add(q.getOption4());
-//			options.add(presentOptions);
-//		}
 		Integer numQ = presentQuiz.getQuestions().size();
 		m.addAttribute("presentQuiz", presentQuiz);
 		m.addAttribute("participantName", participantName);
@@ -51,6 +43,7 @@ public class TakeQuizController {
 		m.addAttribute("rollNumber", rollNumber);
 		m.addAttribute("numQ", numQ);
 		m.addAttribute("quizTitle", presentQuiz.getTitle());
+		m.addAttribute("timeValue", 60000);
 		return "views/takeQuiz/FinalQuiz.jsp";
 	}
 	
@@ -58,9 +51,6 @@ public class TakeQuizController {
 	public String calculateResult(HttpServletRequest request, Model m) {
 		List<Response> responses = new ArrayList<>();
 		List<ComparingResponse> cr = new ArrayList<>();
-//		List<String> userResponses = new ArrayList<>();
-//		List<String> correctResponses = new ArrayList<>();
-//		List<String> questionTitles = new ArrayList<>();
 		
 		String[] questionIds = request.getParameterValues("questionId");
 		for(String qid: questionIds) {
