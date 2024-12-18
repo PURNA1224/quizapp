@@ -88,43 +88,45 @@
         }
     </style>
     <script type="text/javascript">
-    /* var timeVal = element.getAttribute('timeValue'); */
-    var remainingTime = parseInt(${timeValue})/1000;
-    console.log(remainingTime);
-/* 	function autoSubmitForm(){
-		document.getElementById("testPage").submit();
-	} */
-    
-    function countDown(remainingTime){
-    	const formPage = document.getElementById('testPage');
-    	const counterComponent = document.getElementById('counter');
-    	const redCounterComponent = document.getElementById('redCounter');
-    	
-    	const interval = setInterval(() => {
-    		if(remainingTime > 10){
-	    		remainingTime -= 1;
-	    		counterComponent.innerText = "Remaining Time: " + remainingTime+" seconds";
-    		}
-    		else{
-    			remainingTime -= 1;
-    			document.getElementById("redCounter").style.display = "block";
-	    		redCounterComponent.innerText = "Remaining Time: " + remainingTime+" seconds";
-	    		document.getElementById("counter").style.display = "none";
-    		}
-    		
-    		if(remainingTime <= 0){
-    			clearInterval(interval);
-    			counterComponent.innerText = "Submitting the form...";
-    			formPage.submit();
-    		}
-    	},1000);
-    }    
-
+	    var remainingTime = parseInt(${timeValue})/1000;
+	    
+	    function countDown(remainingTime){
+	    	const formPage = document.getElementById('testPage');
+	    	const counterComponent = document.getElementById('counter');
+	    	const redCounterComponent = document.getElementById('redCounter');
+	    	
+	    	const interval = setInterval(() => {
+	    		if(remainingTime > 10){
+		    		remainingTime -= 1;
+		    		counterComponent.innerText = "Remaining Time: " + remainingTime+" seconds";
+	    		}
+	    		else{
+	    			remainingTime -= 1;
+	    			document.getElementById("redCounter").style.display = "block";
+		    		redCounterComponent.innerText = "Remaining Time: " + remainingTime+" seconds";
+		    		document.getElementById("counter").style.display = "none";
+	    		}
+	    		
+	    		if(remainingTime <= 0){
+	    			clearInterval(interval);
+	    			counterComponent.innerText = "Submitting the form...";
+	    			formPage.submit();
+	    		}
+	    	},1000);
+	    }    
 	
-	window.onload = () => {
-		countDown(remainingTime);
-		/* setTimeout(autoSubmitForm, timeValue); */
-	};
+		
+		window.onload = function() {
+			history.pushState(null, "", location.href);
+			
+			window.onpopstate = function() {
+				history.pushState(null, "", location.href);
+                window.location.href = "/";
+            };
+			
+			countDown(remainingTime);
+			
+		};
 </script>
 </head>
 <body>
