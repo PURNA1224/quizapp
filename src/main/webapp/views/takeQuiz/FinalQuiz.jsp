@@ -114,15 +114,17 @@
 	    		}
 	    	},1000);
 	    }    
+	    
+	    
 	
 		
 		window.onload = function() {
-			history.pushState(null, "", location.href);
+			/* history.pushState(null, "", location.href);
 			
 			window.onpopstate = function() {
 				history.pushState(null, "", location.href);
                 window.location.href = "/";
-            };
+            }; */
 			
 			countDown(remainingTime);
 			
