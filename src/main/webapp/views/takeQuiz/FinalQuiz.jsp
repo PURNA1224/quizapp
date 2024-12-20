@@ -67,56 +67,75 @@
         }
         #counter{
         	color: #2aa700;
-		    /* border: solid; */
+		    display: inline-block;
 		    width: fit-content;
 		    padding: 10px;
-		    /* background-color: seagreen; */
-		    font-size: unset;
-		    font-family: 'DM Sans';
+		    font-size: 14px;
+		    font-family: ui-serif;
 		    border-radius: inherit;
 		    font-weight: 600;
         }
         #redCounter{
         	display: none;
         	color: red;
-		    /* border: solid; */
 		    width: fit-content;
 		    padding: 10px;
-		    /* background-color: red; */
-		    font-size: unset;
-		    font-family: 'DM Sans';
+		    font-size: 14px;
+		    font-family: ui-serif;
 		    border-radius: inherit;
 		    font-weight: 600;
+        }
+        #blinkit {
+        	color: black;
         }
     </style>
     <script type="text/javascript">
     
 	    var remainingTime = parseInt(${timeValue})/1000;
+	    let redBlinker;
 	    
 	    function countDown(remainingTime){
-	    	let sec = 60;
 		    const formPage = document.getElementById('testPage');
 	    	const counterComponent = document.getElementById('counter');
 	    	const redCounterComponent = document.getElementById('redCounter');
-	    	
+	    	let hr;
+	    	let min;
+	    	let sec;
 	    	const interval = setInterval(() => {
+	    		if(remainingTime == 10){
+	    			clearInterval(greenBlinker);
+	    			redBlinker = setInterval(blink2, 500);
+	    		}
 	    		if(remainingTime > 10){
 		    		remainingTime -= 1;
-		    		sec -= 1;
-		    		counterComponent.innerText = "Remaining Time: " + parseInt(remainingTime/60)+" : "+ sec +" min";
-		    		if(sec == 0){
-		    			sec = 60;
-		    		}
+		    		hr = parseInt(remainingTime/3600);
+		    		min = parseInt((remainingTime/60)%60);
+		    		sec = (remainingTime%60);
+		    		
+		    		chr = (parseInt(remainingTime/3600))<10?"0"+hr:hr;
+		    		cmin = (parseInt((remainingTime/60)%60))<10?"0"+min:min;
+		    		csec = (remainingTime%60)<10?"0"+sec:sec;
+
+		    		counterComponent.innerHTML = chr + "<span id='blinkit' style='color: black;'> : </span>" + cmin + "<span id='blinkit2' style='color: black;'> : </span>" + csec + " hours";
 	    		}
 	    		else{
 	    			remainingTime -= 1;
-	    			document.getElementById("redCounter").style.display = "block";
-		    		redCounterComponent.innerText = "Remaining Time: " + remainingTime+" seconds";
+	    			hr = parseInt(remainingTime/3600);
+	    			sec = remainingTime%60;
+	    			min = parseInt((remainingTime/60)%60);
+		    		
+		    		chr = (parseInt(remainingTime/3600))<10?"0"+hr:hr;
+		    		cmin = (parseInt((remainingTime/60)%60))<10?"0"+min:min;
+		    		csec = (remainingTime%60)<10?"0"+sec:sec;
+		    		
+	    			document.getElementById("redCounter").style.display = "inline-block";
 		    		document.getElementById("counter").style.display = "none";
+		    		redCounterComponent.innerHTML = chr + "<span id='redblink' style='color: black;'> : </span>" + cmin + "<span id='redblink2' style='color: black;'> : </span>" + csec + " hours";
 	    		}
-	    		
+
 	    		if(remainingTime <= 0){
-	    			/* clearInterval(interval); */
+	    			clearInterval(redBlinker);
+	    			document.getElementById("redCounter").style.display = "none";
 	    			counterComponent.innerText = "Submitting the form...";
 	    			formPage.submit();
 	    		}
@@ -125,34 +144,45 @@
 	    
 	    
 	    window.onload = function () {
-	        /* // Push a dummy state to the history stack
-	        history.pushState(null, "/", location.href);
-
-	        // Listen for the back button event
-	        window.onpopstate = function (event) {
-	            if (event) {
-	                // Redirect to the desired page when the back button is pressed
-	                window.location.href = "/";
-	            }
-	        }; */
-	        
 	        countDown(remainingTime);
 	    };
 	    
 	    function zeroCounter() {
-	    	/* const formPage = document.getElementById('testPage'); */
-	    	/* setInterval(()=> {
-	    		formPage.submit();
-	    	},0); */
-	    	countDown(0);
+	    	/* countDown(0); */
 	    }
+	    
+	    
+	    let isBlinking = false;  
+
+	    function blink() {  
+	    	const timerBlink = document.getElementById("blinkit");
+	    	const timerBlink2 = document.getElementById("blinkit2");
+	        isBlinking = !isBlinking;  
+	        timerBlink.style.color = isBlinking ? 'black' : 'white';
+	        timerBlink2.style.color = isBlinking ? 'black' : 'white';
+	    }  
+
+	    let greenBlinker = setInterval(blink, 500);
+	    
+	    let isBlinking2 = true;  
+ 
+	    function blink2() {  
+	    	const timerBlinkred = document.getElementById("redblink");
+	    	const timerBlinkred2 = document.getElementById("redblink2");
+	        isBlinking2 = !isBlinking2;  
+	        timerBlinkred.style.color = isBlinking2 ? 'black' : 'white';
+	        timerBlinkred2.style.color = isBlinking2 ? 'black' : 'white';
+	    } 
+
+	    
 		
 </script>
 </head>
 <body>
     <div class="container">
     <input type="hidden" id='timeValue' name="timeValue" value="${timeValue}"/>
-    <h5 id="counter">Remaining time: 10:00 min</h5>
+    <h6 style="display: inline-block; font-size: 14px;">Remaining Time : </h6>
+    <h5 id="counter" >Timer loading...<span id='blinkit'></span><span id='blinkit2'></span></h5>
     <h5 id="redCounter"></h5>
         <h1>Take Quiz</h1>
 		
