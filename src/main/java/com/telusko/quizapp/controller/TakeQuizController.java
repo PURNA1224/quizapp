@@ -8,8 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.telusko.quizapp.dao.QuizDao;
 import com.telusko.quizapp.model.ComparingResponse;
@@ -47,7 +47,7 @@ public class TakeQuizController {
 		return "views/takeQuiz/FinalQuiz.jsp";
 	}
 	
-	@PostMapping(value="/calculatingResult")
+	@GetMapping("/calculatingResult")
 	public String calculateResult(HttpServletRequest request, Model m) {
 		List<Response> responses = new ArrayList<>();
 		List<ComparingResponse> cr = new ArrayList<>();

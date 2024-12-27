@@ -99,18 +99,55 @@
             background-color: rgba(0,
                     0,
                     0,
-                    0.4);
+                    0.6);
             display: none;
+            font-family: initial;
         }
         .popup-content {
         	background-color: white;
             margin: 10% auto;
             padding: 20px;
             border: 1px solid #888888;
-            width: 30%;
             font-weight: bolder;
+            max-width: fit-content;
+    		border-radius: 30px;
+    		padding: 50px;
+    		margin-bottom: 5px;
         }
-
+        .popUpElements {
+        	display: inline-block;
+        	margin: unset;
+        	color: black;
+        	font-size: 20px;
+    		font-weight: initial;
+        }
+        .popUpElementsAnsweredNot{
+        	display: inline-block;
+        	margin: unset;
+        }
+        .circleDiv{
+        	width: 15px;
+    		height: 15px;
+		    background-color: #E60101;
+		    display: inline-block;
+		    border-radius: 25px;
+		    margin-right: 5px;
+        }
+        #popUpHeading {
+	        font-size: 30px;
+	        margin: unset;
+	        margin-bottom: 30px;
+	        font-weight: 525;
+        }
+        .tableContentHead{
+    		font-weight: normal;
+    		font-size: 14px;
+        }
+        .tableContentData {
+        	font-weight: normal;
+        	text-align: center;
+        }
+		
     </style>
     <script type="text/javascript">
     
@@ -118,6 +155,8 @@
 	    var remainingTime = parseInt(${timeValue})/1000;
 	    let redBlinker;
 	    let questionStatus = {};
+	    const endTimeKey = 'counter_end_time';
+	    let endTimeTrigger = sessionStorage.getItem(endTimeKey);
 	    
 	    
 	    function countDown(remainingTime){
@@ -125,6 +164,7 @@
 		    const formPage = document.getElementById('testPage');
 	    	const counterComponent = document.getElementById('counter');
 	    	const redCounterComponent = document.getElementById('redCounter');
+	    	
 	    	let hr;
 	    	let min;
 	    	let sec;
@@ -163,7 +203,6 @@
 		    		chr = (parseInt(remainingTime/3600))<10?"0"+hr:hr;
 		    		cmin = (parseInt((remainingTime/60)%60))<10?"0"+min:min;
 		    		csec = (remainingTime%60)<10?"0"+sec:sec;
-		    		
 	    			document.getElementById("redCounter").style.display = "inline-block";
 		    		document.getElementById("counter").style.display = "none";
 		    		redCounterComponent.innerHTML = chr + "<span id='redblink' style='color: black;'> : </span>" + cmin + "<span id='redblink2' style='color: black;'> : </span>" + csec + " hours";
@@ -184,10 +223,21 @@
 	    window.onload = function () {
 	    	
 	        countDown(remainingTime);
+	        if(endTimeTrigger > 0){
+			    const counterComponent = document.getElementById('counter');
+			    const formPage = document.getElementById('testPage');
+		    	counterComponent.innerText = "Submitting the form...";
+				formPage.submit();
+		    }
+		    sessionStorage.setItem(endTimeKey, Date.now());
 	        const numQs = document.getElementById('numQuestions').value;
+	        document.getElementById("totalNoQuestions").innerText = numQs;
+	    	let AnsweredCount = 0;
 	        let lengthOfObject = 0;
 	        let qn = 0;
 	        const popUpContent = document.getElementById('item-content');
+	        document.getElementById("answeredCount").innerText = 0;
+            document.getElementById("unansweredCount").innerText = numQs;
 	        
 	        document.querySelectorAll(".question").forEach((questions)=>{
 	        	document.querySelectorAll("label").forEach((labels)=>{
@@ -196,7 +246,7 @@
 	        			if(lengthOfObject<numQs){
 	        				qn += 1;
 				        	questionStatus[radio.name] = false;
-				        	popUpContent.innerHTML += "<h6 id='mainQno" + radio.name.replace("q","") + "' style='color: red; display: inline-block; margin: unset;'> Question " + qn + " : <h6 style='color: red; display: inline-block; margin: unset;' id='qno" + radio.name.replace("q","") + "'> Not Answered</h6> </h6><br>";
+				        	popUpContent.innerHTML += "<center><div id='circleDiv"+ radio.name.replace("q","") +"' class='circleDiv'></div><h6 id='mainQno" + radio.name.replace("q","") + "' class='popUpElements'> Question " + qn + "</h6></center>";
 	        			}
 	        			
 			        });
@@ -211,17 +261,23 @@
 	        	
 	            radio.addEventListener('change', function() {
 	                // Get the question number and selected answer
+	                AnsweredCount += 1;
 	                const questionNumber = this.name.replace('q', '');
 	                const setAnsweredQuestion = document.getElementById("qno"+questionNumber);
 	                const setMainAnsweredQuestion = document.getElementById("mainQno"+questionNumber);
 	                questionStatus[this.name] = true;
-	                setAnsweredQuestion.innerHTML = "<h6 style='color: green; display: inline-block; margin: unset; font-size: unset;' id='qno" + radio.name.replace("q","") + "'> Answered</h6>";
-	                setMainAnsweredQuestion.style.display = 'inline-block';
-	                setMainAnsweredQuestion.style.color = 'green';
-	                setMainAnsweredQuestion.style.margin = 'unset';
+	                document.getElementById("circleDiv"+questionNumber).style.backgroundColor = "#00A136";
+	                let countMe = 0;
+	                for(let key in questionStatus){
+	                	if(questionStatus[key] == true){
+	                		countMe += 1;
+	                	}
+	                }
+	                AnsweredCount = countMe;
+	                document.getElementById("answeredCount").innerText = AnsweredCount;
+	                document.getElementById("unansweredCount").innerText = numQs - AnsweredCount;
 	            });
 	        });
-	        
 	        
 	    }; 
 	    
@@ -260,9 +316,10 @@
 	    }
 	    
 	    function submitingForm() {
-	    	const formPageByButton = document.getElementById('testPage');
-	    	formPageByButton.submit();
-	    	countDown(0);
+	    	/* sessionStorage.setItem(endTimeKey, 1); */
+			const formPage = document.getElementById('testPage');
+	    	formPage.submit();
+	    	
 	    }
 	    
 	    window.addEventListener(
@@ -275,7 +332,6 @@
 	            }
 	    );
 	    
-	    
 	
 </script>
 </head>
@@ -287,7 +343,7 @@
 	    <h5 id="redCounter"></h5>
 	    
 	    <h1>Take Quiz</h1>
-			<form id="testPage" action="/calculatingResult" method="POST">
+			<form id="testPage" action="/calculatingResult" method="GET">
 	       		<input type="hidden" name="quizId" class="upside" value="${presentQuiz.id}">
 	            <!-- Participant Details -->
 	            <label for="participantName">Participant Name:</label>
@@ -332,10 +388,30 @@
 </body>
 <div id="reviewingQuestions">
 	<div class="popup-content">
-		Questions 
+		<center><p id="popUpHeading">Quiz Questions status</p></center>
 		<h3 id="item-content"></h3>
-		<button onclick="closePopMe()">Back</button>
-	    <button type="submit" id="submitButton" onclick="submitingForm()">Submit Quiz</button>
+		
+		<table style="margin-left: auto; margin-right: auto; margin-top: 30px;">
+			<thead>
+				<tr class="tableContentHead">
+					<th style="padding-right: 30px;">Total No Questions</th>
+					<th style="padding-right: 30px;">Answered</th>
+					<th>Unanswered</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="tableContentData">
+					<td><p id="totalNoQuestions" style="padding-right: 30px;"></p></td>
+					<td><p id="answeredCount" style="padding-right: 30px;"></p></td>
+					<td><p id="unansweredCount"></p></td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<p style="font-size: 14px; font-weight: normal; margin-top: 20px; margin-left: 10px; margin-bottom: -5px;">Circles represented by red are not answered questions.</p>
+		<p style="font-size: 14px; font-weight: normal; margin-bottom: 20px; margin-left: 10px;">Circles represented by green are answered questions. </p>		
+		<button onclick="closePopMe()" style="background-color: #E60101; font-family: inherit;">Go Back</button>
+	    <button type="submit" id="submitButton" onclick="submitingForm()" style="float: right; background-color: #00A136; font-family: inherit;">Confirm</button>
 	    
 	</div>
 </div>

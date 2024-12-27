@@ -31,6 +31,11 @@ public class HomeController {
 		return "views/HomePage.html";
 	}
 	
+//	@GetMapping("/login")
+//	public String loginForm() {
+//		return "custom_login";
+//	}
+	
 	@RequestMapping("createQuestion")
 	public String addME() {
 		return "views/CreateQuestion.html";

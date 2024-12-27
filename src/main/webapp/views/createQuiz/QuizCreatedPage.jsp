@@ -70,7 +70,7 @@
         <p>Your Quiz ID is: <strong><c:out value="${quizId}"></c:out></strong></p>
         <div class="button-group">
             <!-- Button to create a new quiz -->
-            <form action="createQuiz" method="GET" style="margin: 0;">
+            <form action="/createQuiz" method="GET" style="margin: 0;">
                 <button type="submit" class="btn-new-quiz">Create New Quiz</button>
             </form>
             <!-- Button to navigate to home -->
